@@ -4,6 +4,8 @@ var express = require("express"),
 	app = express();
 var debug = require('debug')('random:app');
 
+var FB = require('fb');
+
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
@@ -13,6 +15,10 @@ app.get("/", function(req, res){
 	res.status(200).send({
 		foo:'bar'
 	});
+});
+
+app.get("/api/:token", function(req, res) {
+     res.send("token is set to " + req.param("token"));
 });
 
 app.get("/page", function(req, res){

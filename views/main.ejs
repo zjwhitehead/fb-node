@@ -99,7 +99,12 @@
 
       }
     }
-);
+	);
+  }
+  function getAJAX () {
+  	$.get("/api/123412/", function(string) {
+    alert(string)
+	});
   }
 </script>
 
@@ -109,7 +114,7 @@
   the FB.login() function when clicked.
 -->
 <h1>Facebook User App</h1>
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+<fb:login-button scope="public_profile,email" onlogin="checkLoginState();" data-auto-logout-link="true">
 </fb:login-button>
 
 <div id="user-name"></div>
@@ -117,6 +122,8 @@
 
 <div id="status">
 </div>
+
+<a href="#" onClick="getAJAX();">Get AJAX </a>
 
 </body>
 </html>

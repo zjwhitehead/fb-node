@@ -16,8 +16,9 @@
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
       window.userID = response.authResponse.userID;
+      window.token = response.authResponse.accessToken;
       testAPI();
-      getInfo();
+      getAJAX();
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
       document.getElementById('status').innerHTML = 'Please log ' +
@@ -96,14 +97,14 @@
         /* handle the result */
         console.log("pic = " + response.data.url);
         $("#user-profile").append("<img id='user-profile-image' src='" +response.data.url + "'/>");
-
       }
     }
 	);
   }
   function getAJAX () {
-  	$.get("/api/123412/", function(string) {
-    alert(string)
+  	$.get("/api/" + window.token, function(res) {
+	 $('#user-name').text('Hi, ' + res.name + '!');
+	 $("#user-profile").html("<img id='user-profile-image' src='" +res.profilePicURL + "'/>");
 	});
   }
 </script>
@@ -123,7 +124,7 @@
 <div id="status">
 </div>
 
-<a href="#" onClick="getAJAX();">Get AJAX </a>
+<a href="#" onClick="getAJAX();">Get My Info </a>
 
 </body>
 </html>

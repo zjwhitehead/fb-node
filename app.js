@@ -18,7 +18,26 @@ app.get("/", function(req, res){
 });
 
 app.get("/api/:token", function(req, res) {
-     res.send("token is set to " + req.param("token"));
+	debug('serving api');
+	var token = req.param("token");
+		FB.setAccessToken(token);
+	debug('token is ' + token);
+	FB.api('/me', function (response) {
+	  if(!response || response.error) {
+	   console.log(!response ? 'error occurred' : response.error);
+	   return;
+	  }
+	  console.log(response.id);
+	  console.log(response.name);
+
+	res.status(200).send({
+		fbToken:token,
+		name:response.name,
+		profilePicURL: "https://graph.facebook.com/" + response.id + "/picture?type=normal"
+	});
+
+	});
+
 });
 
 app.get("/page", function(req, res){
